@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SUSTC-its-helper
+// @name         SUSTC-tis-helper
 // @namespace    https://vollate.top/
 // @version      2024-02-18
 // @description  SUSTech 可能会变质，但绝对不会倒闭
