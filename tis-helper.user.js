@@ -42,7 +42,7 @@
         GM_setValue(key, JSON.stringify(vals));
     }
 
-    function clearGM(key) {
+    function clearGM_(key) {
         GM_setValue(key, undefined)
     }
 
@@ -60,7 +60,16 @@
 
     const checkAndAdd_ = (url, init) => {
         if (url.endsWith('Xsxk/addGouwuche')) {
-            appendGMAry_('courseRequest', init)
+            originalFetch(RequestURL, {
+                method: 'POST',
+                headers: Headers_,
+                body: init,
+                credentials: 'include'
+            }).then(res => res.json())
+                .then(data => {
+                    let name = data.message.match('，课程：.+');
+                    appendGMAry_('courseRequest', {'body': init, 'name': data.message.substring(name.index + 4)});
+                });
         }
     };
 
@@ -93,15 +102,17 @@
     async function courceRace_(targets) {
         while (GM_getValue('Start')) {
             for (let i = 0; i < targets.length; i++) {
-                console.log('index: ', i)
                 originalFetch(RequestURL, {
                     method: 'POST',
                     headers: Headers_,
-                    body: targets[i],
+                    body: targets[i].body,
                     credentials: 'include'
-                }).then(res => {
-                    console.log(res.body)
-                })
+                }).then(res => res.json())
+                    .then(data => {
+                        if (data.jg == '1') {
+                            console.log('Capture' + targets[i].name)
+                        }
+                    })
                 await new Promise(resolve => setTimeout(resolve, 5));
             }
         }
@@ -115,21 +126,26 @@
 
     const menu_command_id_2_ = GM_registerMenuCommand("Stop", () => {
         alert('stop compete');
-        GM_setValue('Start', undefined);
+        clearGM_('Start')
     });
 
     const menu_command_id_3_ = GM_registerMenuCommand("Show selected", () => {
-        console.log(getGMAry_('courseRequest'));
-        confirm(JSON.stringify(getGMAry_('courseRequest')));
+        let courses = getGMAry_('courseRequest');
+        let info = ''
+        for (let i = 0; i < courses.length; ++i) {
+            info += i + 1 + '. ' + courses[i].name + '\n';
+        }
+        confirm(info);
     });
 
     const menu_command_id_4_ = GM_registerMenuCommand("Clear all courses", () => {
         if (confirm('Are you sure to clear all courses?')) {
-            clearGM('courseName');
-            clearGM('courseRequest');
+            clearGM_('courseName');
+            clearGM_('courseRequest');
         }
     });
 
     setInterval(enableAllButtons_, 1000);
 })();
+
 
