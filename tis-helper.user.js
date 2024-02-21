@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SUSTC-tis-helper
-// @namespace    https://vollate.top/
-// @version      2024-02-18
+// @namespace    https://blog.vollate.top/
+// @version      1.0.1
 // @description  SUSTech 可能会变质，但绝对不会倒闭
 // @author       Vollate
 // @match        https://tis.sustech.edu.cn/*
