@@ -68,7 +68,11 @@
             }).then(res => res.json())
                 .then(data => {
                     let name = data.message.match('，课程：.+');
-                    appendGMAry_('courseRequest', {'body': init, 'name': data.message.substring(name.index + 4)});
+                    if (name) {
+                        appendGMAry_('courseRequest', {'body': init, 'name': data.message.substring(name.index + 4)});
+                    } else {
+                        alert("选课时间冲突，请选择选择其他时间课程或退掉对应时间课程")
+                    }
                 });
         }
     };

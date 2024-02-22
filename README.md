@@ -12,9 +12,9 @@
 
 ## 安装
 
-请使用 Tampermonkey 脚本管理器
+请使用 Tampermonkey 脚本管理器：[官网](https://www.tampermonkey.net/)
 
-[安装脚本](https://raw.githubusercontent.com/Vollate/SUSTech-tis-helper/main/tis-helper.user.js)
+[安装此脚本](https://raw.githubusercontent.com/vollate/SUSTech-tis-helper/main/tis-helper.user.js)
 
 ## 手册
 
