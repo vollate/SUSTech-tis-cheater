@@ -2,22 +2,37 @@
 
 > 截至2024-2-19,本脚本可用
 
-
-
 ## 安装
 
-请使用 Tampermonkey 脚本管理器，建议从 [官网](https://www.tampermonkey.net/) 安装。安装完成后，[点击此处安装脚本](https://raw.githubusercontent.com/vollate/SUSTech-tis-cheater/main/tis-cheater.user.js)。
+请使用 Tampermonkey 脚本管理器，建议从 [官网](https://www.tampermonkey.net/)
+安装。安装完成后，[点击此处安装脚本](https://raw.githubusercontent.com/vollate/SUSTech-tis-cheater/main/tis-cheater.user.js)。
 
 ## 用法
 
-手动选择你要抢的课（点选课即可，已自动激活原来被禁用的按钮）来添加到待抢名单。显示选课失败是正常的，点一下就行。
-本脚本只在 `tis.sustech.edu.cn` 上工作，如需抢课，请在 tis 页面上进行操作。
-## 功能介绍
+- 选择待抢课程：手动选择你要抢的课，点选课来添加课程到待抢名单（非选课时间段会自动激活被禁用的按钮）。添加成功后右上角会有提示，这个课程存在本地，关闭页面仍然保留。
+  ![add](img/add-course.png)
+  <br/><br/>
+- 开始抢课：点击浏览器插件 Tampermonkey 的图标，在 `SUSTech tis cheater`选项栏中点击 `Start` 按钮开始抢课。开始后右上角会显示通知。
+  ![start](img/start.png)
+  <br/><br/>
+- 抢课成功：当抢课成功时，右下角的窗口会显示对应课程信息。
+  ![success](img/success.png)
+  <br/><br/>
+- 想要停止时，点击 `Stop` 按钮。停止后会发送通知。
+  ![stop](img/stop.png)
+- 设置抢课时间间隔和其他功能参考下方的[选项栏功能介绍](#选项栏功能介绍)。
+
+> **注意**：
+> 1. 本脚本只在域名 `tis.sustech.edu.cn` 上工作，如需抢课，请在 tis 页面上进行操作。
+> 2. 由于需要注入页面，加载时间会有所延长，如有问题请刷新页面重试。
+
+## 选项栏功能介绍
+
 - Start: 开始抢课，结束前请不要关闭当前标签或切换到别的标签，保持浏览器标签处于激活状态。否则脚本可能被浏览器暂停执行。
 - Stop: 停止抢课
-- Show selected：显示已选列表
-- Clear all courses: 清空已选列表
-- Set interval: 设置抢课间隔，单位为毫秒，默认为 200ms
+- Show selected：显示待抢课列表
+- Clear all courses: 清空待抢课列表
+- Set interval: 设置单次请求的抢课时间间隔，单位为毫秒，默认值为 200。抢课逻辑为循环请求待抢列表内的课程。
 
 ![exmaple](img/example.png)
 
@@ -32,6 +47,6 @@
 ## TODO
 
 - [x] 显示添加到抢课列表中的课程名
-- [ ] 删除单个课程
-- [x] 显示抢课成功消息 ~~console.log 也是显示~~
-
+- [x] 删除单个课程
+- [x] 显示抢课成功消息
+- [ ] 抢课成功后自动从待抢列表中删除
