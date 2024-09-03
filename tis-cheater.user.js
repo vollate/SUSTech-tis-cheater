@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SUSTech tis cheater
 // @namespace    https://blog.vollate.top/
-// @version      1.2.0
+// @version      1.2.1
 // @description  SUSTech 可能会变质，但绝对不会倒闭
 // @author       Vollate
 // @match        https://tis.sustech.edu.cn/*
@@ -205,25 +205,19 @@
         if (this._url.endsWith('Xsxk/addGouwuche')) {
             this.addEventListener('readystatechange', function () {
                 if (this.readyState === 4) {
-                    let data = JSON.parse(this.responseText);
-                    if (data.jg === '1') {
-                        console.log('Success, now start to get course name');
-                        new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
-                            fetch(this._url, {
-                                method: 'POST',
-                                headers: FetchHeaders,
-                                body: xhrBodyToFetchBody(body),
-                                credentials: 'include'
-                            }).then(res => res.json()).then(data => {
-                                let CourseName = data.message.split('课程：')[1];
-                                console.log(data);
-                                showAsyncPopup("Add course \"" + CourseName + "\" to course list", 5000);
-                                appendGMAry_('SelectedCourses', {name: CourseName, body: xhrBodyToFetchBody(body)});
-                            })
-                        });
-                    } else {
-                        console.error('Error: ' + data.message);
-                    }
+                    new Promise(resolve => setTimeout(resolve, 4000)).then(() => {
+                        fetch(this._url, {
+                            method: 'POST',
+                            headers: FetchHeaders,
+                            body: xhrBodyToFetchBody(body),
+                            credentials: 'include'
+                        }).then(res => res.json()).then(data => {
+                            let CourseName = data.message.split('课程：')[1];
+                            console.log(data);
+                            showAsyncPopup("Add course \"" + CourseName + "\" to course list", 5000);
+                            appendGMAry_('SelectedCourses', {name: CourseName, body: xhrBodyToFetchBody(body)});
+                        })
+                    });
                 }
             });
         }
@@ -376,4 +370,6 @@
     });
 
     setInterval(enableAllButtons_, 2000);
+
+    clearGM_('Start');
 })();
