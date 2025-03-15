@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SUSTech tis cheater
 // @namespace    https://blog.vollate.top/
-// @version      1.3.2
+// @version      1.3.3
 // @description  SUSTech 可能会变质，但绝对不会倒闭
 // @author       Vollate
 // @match        https://tis.sustech.edu.cn/*
@@ -17,10 +17,27 @@
     $(document).ready(function () {
         'use strict';
         const DEFAULT_INTERVAL = 1600;
+        const language = navigator.language || navigator.userLanguage;
+        const platform = navigator.platform;
+        const ua = navigator.userAgent;
+
+        let secChUa = "";
+        let secChUaMobile = "";
+        let secChUaPlatform = "";
+        if (navigator.userAgentData) {
+            secChUa = navigator.userAgentData.brands.map(b => `"${b.brand}";v="${b.version}"`).join(", ");
+            secChUaMobile = navigator.userAgentData.mobile ? "?1" : "?0";
+            secChUaPlatform = navigator.userAgentData.platform;
+        } else {
+            secChUa = `"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"`;
+            secChUaMobile = "?0";
+            secChUaPlatform = platform;
+        }
+
         const FetchHeaders = {
             "Accept": "*/*",
             "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh-TW;q=0.7,zh;q=0.6",
+            "Accept-Language": language,
             "Connection": "keep-alive",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             "Host": "tis.sustech.edu.cn",
@@ -31,9 +48,9 @@
             "Sec-Fetch-Mode": "cors",
             "Sec-Fetch-Site": "same-origin",
             "X-Requested-With": "XMLHttpRequest",
-            "sec-ch-ua": `"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"`,
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": `"Linux"`
+            "sec-ch-ua": secChUa,
+            "sec-ch-ua-mobile": secChUaMobile,
+            "sec-ch-ua-platform": secChUaPlatform
         };
 
         const CSSManager = {
